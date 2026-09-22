@@ -3,9 +3,9 @@ import pandas as pd
 import joblib
 
 
-# =========================================================
-# PAGE CONFIGURATION
-# =========================================================
+# --------------------------------------------------
+# PAGE SETTINGS
+# --------------------------------------------------
 
 st.set_page_config(
     page_title="Irrigation Water Prediction",
@@ -14,18 +14,20 @@ st.set_page_config(
 )
 
 
-# =========================================================
+# --------------------------------------------------
 # LOAD MODEL AND DATASET
-# =========================================================
+# --------------------------------------------------
 
 model = joblib.load("models/irrigation_model.pkl")
 
-df = pd.read_csv("dataset/irrigation_prediction.csv")
+df = pd.read_csv(
+    "dataset/irrigation_prediction.csv"
+)
 
 
-# =========================================================
+# --------------------------------------------------
 # TITLE
-# =========================================================
+# --------------------------------------------------
 
 st.title("🌱 Irrigation Water Requirement Prediction")
 
@@ -37,14 +39,13 @@ st.write(
 st.divider()
 
 
-# =========================================================
+# --------------------------------------------------
 # SOIL INFORMATION
-# =========================================================
+# --------------------------------------------------
 
 st.header("🌍 Soil Information")
 
 col1, col2 = st.columns(2)
-
 
 with col1:
 
@@ -53,102 +54,113 @@ with col1:
         sorted(df["Soil_Type"].unique())
     )
 
-    soil_ph = st.text_input(
+    soil_ph = st.number_input(
         "Soil pH",
-        value=str(round(df["Soil_pH"].median(), 2))
+        value=float(df["Soil_pH"].median())
     )
 
-    soil_moisture = st.text_input(
+    soil_moisture = st.number_input(
         "Soil Moisture",
-        value=str(round(df["Soil_Moisture"].median(), 2))
+        value=float(df["Soil_Moisture"].median())
     )
 
 
 with col2:
 
-    organic_carbon = st.text_input(
+    organic_carbon = st.number_input(
         "Organic Carbon",
-        value=str(round(df["Organic_Carbon"].median(), 2))
+        value=float(df["Organic_Carbon"].median())
     )
 
-    electrical_conductivity = st.text_input(
+    electrical_conductivity = st.number_input(
         "Electrical Conductivity",
-        value=str(round(df["Electrical_Conductivity"].median(), 2))
+        value=float(
+            df["Electrical_Conductivity"].median()
+        )
     )
 
 
 st.divider()
 
 
-# =========================================================
+# --------------------------------------------------
 # WEATHER INFORMATION
-# =========================================================
+# --------------------------------------------------
 
 st.header("🌤️ Weather Information")
 
 col1, col2, col3 = st.columns(3)
 
-
 with col1:
 
-    temperature = st.text_input(
+    temperature = st.number_input(
         "Temperature (°C)",
-        value=str(round(df["Temperature_C"].median(), 2))
+        value=float(
+            df["Temperature_C"].median()
+        )
     )
 
 
 with col2:
 
-    humidity = st.text_input(
+    humidity = st.number_input(
         "Humidity",
-        value=str(round(df["Humidity"].median(), 2))
+        value=float(
+            df["Humidity"].median()
+        )
     )
 
 
 with col3:
 
-    rainfall = st.text_input(
+    rainfall = st.number_input(
         "Rainfall (mm)",
-        value=str(round(df["Rainfall_mm"].median(), 2))
+        value=float(
+            df["Rainfall_mm"].median()
+        )
     )
 
 
 col1, col2 = st.columns(2)
 
-
 with col1:
 
-    sunlight = st.text_input(
+    sunlight = st.number_input(
         "Sunlight Hours",
-        value=str(round(df["Sunlight_Hours"].median(), 2))
+        value=float(
+            df["Sunlight_Hours"].median()
+        )
     )
 
 
 with col2:
 
-    wind_speed = st.text_input(
+    wind_speed = st.number_input(
         "Wind Speed (km/h)",
-        value=str(round(df["Wind_Speed_kmh"].median(), 2))
+        value=float(
+            df["Wind_Speed_kmh"].median()
+        )
     )
 
 
 st.divider()
 
 
-# =========================================================
+# --------------------------------------------------
 # CROP INFORMATION
-# =========================================================
+# --------------------------------------------------
 
 st.header("🌾 Crop Information")
 
 col1, col2, col3 = st.columns(3)
 
-
 with col1:
 
     crop_type = st.selectbox(
         "Crop Type",
-        sorted(df["Crop_Type"].unique())
+        sorted(
+            df["Crop_Type"].unique()
+        )
     )
 
 
@@ -156,7 +168,9 @@ with col2:
 
     crop_growth_stage = st.selectbox(
         "Crop Growth Stage",
-        sorted(df["Crop_Growth_Stage"].unique())
+        sorted(
+            df["Crop_Growth_Stage"].unique()
+        )
     )
 
 
@@ -164,37 +178,44 @@ with col3:
 
     season = st.selectbox(
         "Season",
-        sorted(df["Season"].unique())
+        sorted(
+            df["Season"].unique()
+        )
     )
 
 
 st.divider()
 
 
-# =========================================================
+# --------------------------------------------------
 # IRRIGATION INFORMATION
-# =========================================================
+# --------------------------------------------------
 
 st.header("💧 Irrigation Information")
 
 col1, col2 = st.columns(2)
 
-
 with col1:
 
     irrigation_type = st.selectbox(
         "Irrigation Type",
-        sorted(df["Irrigation_Type"].unique())
+        sorted(
+            df["Irrigation_Type"].unique()
+        )
     )
 
     water_source = st.selectbox(
         "Water Source",
-        sorted(df["Water_Source"].unique())
+        sorted(
+            df["Water_Source"].unique()
+        )
     )
 
-    field_area = st.text_input(
+    field_area = st.number_input(
         "Field Area (hectare)",
-        value=str(round(df["Field_Area_hectare"].median(), 2))
+        value=float(
+            df["Field_Area_hectare"].median()
+        )
     )
 
 
@@ -202,26 +223,32 @@ with col2:
 
     mulching_used = st.selectbox(
         "Mulching Used",
-        sorted(df["Mulching_Used"].unique())
+        sorted(
+            df["Mulching_Used"].unique()
+        )
     )
 
-    previous_irrigation = st.text_input(
+    previous_irrigation = st.number_input(
         "Previous Irrigation (mm)",
-        value=str(round(df["Previous_Irrigation_mm"].median(), 2))
+        value=float(
+            df["Previous_Irrigation_mm"].median()
+        )
     )
 
     region = st.selectbox(
         "Region",
-        sorted(df["Region"].unique())
+        sorted(
+            df["Region"].unique()
+        )
     )
 
 
 st.divider()
 
 
-# =========================================================
-# PREDICTION BUTTON
-# =========================================================
+# --------------------------------------------------
+# PREDICTION
+# --------------------------------------------------
 
 if st.button(
     "🔮 Predict Irrigation Need",
@@ -230,116 +257,201 @@ if st.button(
 
     try:
 
-        # Convert manually entered values to numbers
-
-        soil_ph_value = float(soil_ph)
-
-        soil_moisture_value = float(soil_moisture)
-
-        organic_carbon_value = float(organic_carbon)
-
-        electrical_conductivity_value = float(
-            electrical_conductivity
-        )
-
-        temperature_value = float(temperature)
-
-        humidity_value = float(humidity)
-
-        rainfall_value = float(rainfall)
-
-        sunlight_value = float(sunlight)
-
-        wind_speed_value = float(wind_speed)
-
-        field_area_value = float(field_area)
-
-        previous_irrigation_value = float(
-            previous_irrigation
-        )
-
-
-        # =================================================
-        # CREATE INPUT DATAFRAME
-        # =================================================
+        # --------------------------------------------------
+        # CREATE INPUT DATA
+        # --------------------------------------------------
 
         input_data = pd.DataFrame({
 
             "Soil_Type": [soil_type],
 
-            "Soil_pH": [soil_ph_value],
+            "Soil_pH": [soil_ph],
 
-            "Soil_Moisture": [soil_moisture_value],
+            "Soil_Moisture": [
+                soil_moisture
+            ],
 
-            "Organic_Carbon": [organic_carbon_value],
+            "Organic_Carbon": [
+                organic_carbon
+            ],
 
             "Electrical_Conductivity": [
-                electrical_conductivity_value
+                electrical_conductivity
             ],
 
-            "Temperature_C": [temperature_value],
+            "Temperature_C": [
+                temperature
+            ],
 
-            "Humidity": [humidity_value],
+            "Humidity": [
+                humidity
+            ],
 
-            "Rainfall_mm": [rainfall_value],
+            "Rainfall_mm": [
+                rainfall
+            ],
 
-            "Sunlight_Hours": [sunlight_value],
+            "Sunlight_Hours": [
+                sunlight
+            ],
 
-            "Wind_Speed_kmh": [wind_speed_value],
+            "Wind_Speed_kmh": [
+                wind_speed
+            ],
 
-            "Crop_Type": [crop_type],
+            "Crop_Type": [
+                crop_type
+            ],
 
-            "Crop_Growth_Stage": [crop_growth_stage],
+            "Crop_Growth_Stage": [
+                crop_growth_stage
+            ],
 
-            "Season": [season],
+            "Season": [
+                season
+            ],
 
-            "Irrigation_Type": [irrigation_type],
+            "Irrigation_Type": [
+                irrigation_type
+            ],
 
-            "Water_Source": [water_source],
+            "Water_Source": [
+                water_source
+            ],
 
             "Field_Area_hectare": [
-                field_area_value
+                field_area
             ],
 
-            "Mulching_Used": [mulching_used],
+            "Mulching_Used": [
+                mulching_used
+            ],
 
             "Previous_Irrigation_mm": [
-                previous_irrigation_value
+                previous_irrigation
             ],
 
-            "Region": [region]
+            "Region": [
+                region
+            ]
         })
 
 
-        # =================================================
+        # --------------------------------------------------
         # MAKE PREDICTION
-        # =================================================
+        # --------------------------------------------------
 
-        prediction = model.predict(input_data)
+        prediction = model.predict(
+            input_data
+        )
 
         result = prediction[0]
 
 
-        # =================================================
-        # DISPLAY RESULT
-        # =================================================
+        # --------------------------------------------------
+        # DISPLAY PREDICTION
+        # --------------------------------------------------
 
-        st.success(
-            f"🌱 Irrigation Requirement: **{result}**"
-        )
+        st.subheader("🌱 Prediction Result")
+
+        if result == "Low":
+
+            st.success(
+                "🌱 Irrigation Requirement: **LOW**"
+            )
+
+        elif result == "Medium":
+
+            st.warning(
+                "🌱 Irrigation Requirement: **MEDIUM**"
+            )
+
+        elif result == "High":
+
+            st.error(
+                "🌱 Irrigation Requirement: **HIGH**"
+            )
+
+        else:
+
+            st.info(
+                f"🌱 Irrigation Requirement: **{result}**"
+            )
 
 
-    except ValueError:
+        # --------------------------------------------------
+        # PREDICTION PROBABILITIES
+        # --------------------------------------------------
+
+        if hasattr(model, "predict_proba"):
+
+            probabilities = model.predict_proba(
+                input_data
+            )[0]
+
+            classes = model.classes_
+
+
+            probability_df = pd.DataFrame({
+
+                "Irrigation Level": classes,
+
+                "Probability (%)": (
+                    probabilities * 100
+                ).round(2)
+
+            })
+
+
+            st.subheader(
+                "📊 Prediction Probabilities"
+            )
+
+
+            # Display probabilities
+
+            for i, row in probability_df.iterrows():
+
+                level = row["Irrigation Level"]
+
+                probability = row["Probability (%)"]
+
+
+                st.write(
+                    f"**{level}: {probability:.2f}%**"
+                )
+
+
+                st.progress(
+                    int(probability)
+                )
+
+
+            # Display table
+
+            st.dataframe(
+                probability_df,
+                use_container_width=True,
+                hide_index=True
+            )
+
+
+            st.info(
+                "The probabilities represent the model's "
+                "confidence for each irrigation requirement level."
+            )
+
+
+    except Exception as e:
 
         st.error(
-            "⚠️ Please enter valid numbers in all "
-            "numeric fields."
+            f"⚠️ Prediction error: {e}"
         )
 
 
-# =========================================================
+# --------------------------------------------------
 # FOOTER
-# =========================================================
+# --------------------------------------------------
 
 st.divider()
 
